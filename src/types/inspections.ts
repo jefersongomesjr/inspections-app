@@ -1,5 +1,5 @@
 export interface Inspection {
-    id: string;
+    id?: string;
     location: string;
     inspector: string;
     date: string;
