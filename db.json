@@ -1,0 +1,20 @@
+{
+  "inspections": [{
+    "id": "1",
+    "location": "Restaurante Sabor Brasil",
+    "date": "2026-02-20T09:30:00",
+    "inspector": "Carlos Silva",
+    "initial_state": "em_andamento",
+    "status": ""
+  },
+  {
+    "id": "2",
+    "location": "Padaria Pão Quente",
+    "date": "2026-02-18T14:00:00",
+    "inspector": "Mariana Souza",
+    "initial_state": "pendencias",
+    "status": ""
+
+  }
+]
+}
