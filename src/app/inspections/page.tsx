@@ -26,7 +26,6 @@ export default function Home() {
     initial_state: false,
     status: ""
   };
-  console.log(newInspection);
   await createInspection(newInspection);
   const updatedInspections = await getInspections();
   setInspections(updatedInspections);
