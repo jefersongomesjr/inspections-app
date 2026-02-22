@@ -3,6 +3,6 @@ export interface Inspection {
     location: string;
     inspector: string;
     date: string;
-    initial_state: string;
+    initial_state: boolean;
     status: string;
 }
