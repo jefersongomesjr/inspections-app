@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { getInspections } from "@/services/inspections.service";
 import styles from "./page.module.css";
 import { Inspection } from "@/types/inspections";
+import Card from "@/app/components/organisms/Card";
 
-
-export default function InspectionsPage() {
+export default function Home() {
   const [inspections, setInspections] = useState<Inspection[]>([]);
 
   useEffect(() => {
@@ -14,16 +14,13 @@ export default function InspectionsPage() {
   }, []);
     
   return (
-    <div className={styles.page}>
-      {inspections.map((inspection) => (
-        <div key={inspection.id}>
-          <h2>{inspection.location}</h2>
-          <p>{inspection.inspector}</p>
-          <p>{inspection.date}</p>
-          <p>{inspection.initial_state}</p>
-          <p>{inspection.status}</p>
-        </div>
+    <div className={styles.main}>
+      <section className={styles.inspectionContainer} >
+            {inspections.map((inspection) => (
+        <Card key={inspection.id} inspection={inspection} />
       ))}
+      </section>
+
     </div>
   );
 }
