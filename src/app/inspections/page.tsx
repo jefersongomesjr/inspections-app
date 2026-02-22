@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getInspections } from "@/services/inspections.service";
+import { createInspection, getInspections } from "@/services/inspections.service";
 import styles from "./page.module.css";
 import { Inspection } from "@/types/inspections";
 import Card from "@/app/components/organisms/Card";
@@ -9,25 +9,45 @@ import { ModalOverlay } from "../components/atoms/Modal";
 
 export default function Home() {
   const [inspections, setInspections] = useState<Inspection[]>([]);
+  const [showModal, setShowModal] = useState(false);
+  const [location, setLocation] = useState("");
+  const [inspector, setInspector] = useState("");
 
   useEffect(() => {
     getInspections().then(setInspections);
   }, []);
-    
+
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  const newInspection = {
+    location,
+    inspector,
+    date: String(new Date()),
+    initial_state: false,
+    status: ""
+  };
+  console.log(newInspection);
+  await createInspection(newInspection);
+  const updatedInspections = await getInspections();
+  setInspections(updatedInspections);
+  setShowModal(false);
+};
+
   return (
     <div className={styles.main}>
       <section className={styles.inspectionContainer} >
             {inspections.map((inspection) => (
-        <Card key={inspection.id} inspection={inspection} />
+        <Card key={inspection.id} inspection={inspection} setShowModal={setShowModal} />
       ))}
+      { showModal && 
       <ModalOverlay className={styles.modalOverlay}>
-          <form className={styles.form}>
-            <input type="text" placeholder="Location" />
-            <input type="text" placeholder="Inspector" />
-            <input type="text" placeholder="Date" />
-            <input type="text" placeholder="Initial State" />
+          <form className={styles.form}  onSubmit={handleSubmit}>
+          <h2 style={{color: "black", marginBottom: "20px"}}> Criar Nova Inspeção</h2>
+            <input type="text" value={location} placeholder="Location" onChange={(e) => setLocation(e.target.value)}/>
+            <input type="text" value={inspector} placeholder="Inspector" onChange={(e) => setInspector(e.target.value)}/>
+            <button type="submit">Criar Inspeção</button>
           </form>
-      </ModalOverlay>
+      </ModalOverlay>}
       </section>
 
     </div>
