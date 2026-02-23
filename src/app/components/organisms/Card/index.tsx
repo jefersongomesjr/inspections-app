@@ -3,6 +3,7 @@ import { Inspection } from '@/types/inspections';
 import styles from './Card.module.css';
 import CardContent from '@/app/components/molecules/CardContent';
 import CardActions from '@/app/components/molecules/CardActions';
+import Link from 'next/link';
 
 type CardProps = {
   inspection: Inspection;
@@ -18,6 +19,11 @@ export default function Card({ inspection, onCardAction }: CardProps) {
         initialState={inspection.initial_state}
         onAction={(actionType) => onCardAction(actionType, inspection.id)} 
       />
+      <div style={{ marginTop: '10px' }}>
+        <Link href={`/inspections/${inspection.id}`} className={styles.detailsLink}>
+          Ver mais detalhes
+        </Link>
+      </div>
     </div>
   );
 }
