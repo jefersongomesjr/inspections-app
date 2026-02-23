@@ -19,7 +19,7 @@ export default function CardContent({ inspection }: { inspection: Inspection }) 
 
   return (
     <div className={styles.cardContent}>
-      <div style={{ display: "flex", justifyContent: 'space-around', width: "100%" }}>
+      <div className={styles.mainInfo}> {/* Use CSS class for main info */}
         <TextWithLabel label="Inspetor" textContent={inspection.inspector} />
         <TextWithLabel label="Data" textContent={formatDate(inspection.date)} />
         <TextWithLabel label="Estado da Inspeção" textContent={!inspection.status ? 'Em Andamento' : 'Concluído'} />
