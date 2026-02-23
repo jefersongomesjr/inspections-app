@@ -5,6 +5,7 @@ import { createInspection, getInspections } from "@/services/inspections.service
 import styles from "./page.module.css";
 import { Inspection } from "@/types/inspections";
 import Card from "@/app/components/organisms/Card";
+import { Button } from "@/app/components/atoms/Button";
 import { ModalOverlay } from "../components/atoms/Modal";
 
 export default function Home() {
@@ -18,35 +19,40 @@ export default function Home() {
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  const newInspection = {
-    location,
-    inspector,
-    date: String(new Date()),
-    initial_state: false,
-    status: ""
+    e.preventDefault();
+    const newInspection = {
+      location,
+      inspector,
+      date: String(new Date()),
+      initial_state: false,
+      status: ""
+    };
+    await createInspection(newInspection);
+    const updatedInspections = await getInspections();
+    setInspections(updatedInspections);
+    setShowModal(false);
   };
-  await createInspection(newInspection);
-  const updatedInspections = await getInspections();
-  setInspections(updatedInspections);
-  setShowModal(false);
-};
 
   return (
     <div className={styles.main}>
       <section className={styles.inspectionContainer} >
-            {inspections.map((inspection) => (
-        <Card key={inspection.id} inspection={inspection} setShowModal={setShowModal} />
-      ))}
-      { showModal && 
-      <ModalOverlay className={styles.modalOverlay}>
-          <form className={styles.form}  onSubmit={handleSubmit}>
-          <h2 style={{color: "black", marginBottom: "20px"}}> Criar Nova Inspeção</h2>
-            <input type="text" value={location} placeholder="Location" onChange={(e) => setLocation(e.target.value)}/>
-            <input type="text" value={inspector} placeholder="Inspector" onChange={(e) => setInspector(e.target.value)}/>
-            <button type="submit">Criar Inspeção</button>
-          </form>
-      </ModalOverlay>}
+        <div className={styles.inspectionHeader}>
+          <h3>Todas Inspeções</h3>
+          <Button textAction="Criar Nova Inspeção" variant="primary" onClick={() => setShowModal(true)} />
+
+        </div>
+        {inspections.map((inspection) => (
+          <Card key={inspection.id} inspection={inspection} setShowModal={() => console.log("Hello")} />
+        ))}
+        {showModal &&
+          <ModalOverlay className={styles.modalOverlay}>
+            <form className={styles.form} onSubmit={handleSubmit}>
+              <h2 style={{ color: "black", marginBottom: "20px" }}> Criar Nova Inspeção</h2>
+              <input type="text" value={location} placeholder="Location" onChange={(e) => setLocation(e.target.value)} />
+              <input type="text" value={inspector} placeholder="Inspector" onChange={(e) => setInspector(e.target.value)} />
+              <Button type="submit" textAction="Criar Inspeção" onClick={() => { }} />
+            </form>
+          </ModalOverlay>}
       </section>
 
     </div>
