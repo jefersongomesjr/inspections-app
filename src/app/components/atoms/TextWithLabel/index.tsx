@@ -1,7 +1,7 @@
 type TextWithLabel = {
   textContent: string;
   label: string;
-  className?: string; // agora className é permitido
+  className?: string;
 };
 
 export function TextWithLabel({ label, textContent, className }: TextWithLabel) {
