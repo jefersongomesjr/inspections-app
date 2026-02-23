@@ -5,8 +5,27 @@
     background-color: #e0dede;
     border: 1px solid #868181;
     display: flex;
-    min-height: 20%;
+    min-height: 30%;
     justify-content: space-around;
     flex-direction: column;
     width: 70%;
+}
+
+.detailsLink {
+  color: #0070f3; 
+  text-decoration: none; 
+  transition: color 0.2s ease-in-out;
+  font-size: 1.1em; 
+  margin-top: 10px;
+}
+
+.detailsLink:hover {
+  color: #005bb5; 
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 96%;
+    min-height: 60%;
+  }
 }
