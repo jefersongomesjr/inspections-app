@@ -26,10 +26,10 @@ export const InspectionForm = ({
     <div style={{width: '80%'}}>
       <FormField
         id="location"
-        label="Localização"
+        label="Estabelecimento"
         value={location}
         onChange={(e) => setLocation(e.target.value)}
-        placeholder="Digite a localização"
+        placeholder="Digite o nome do Estabelecimento"
         required={true}
       />
       <FormField

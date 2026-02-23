@@ -23,8 +23,6 @@ export function InfractionForm({ onSubmit, onCancel, className, initialData }: I
     <form onSubmit={handleSubmit} className={className}>
       <h2>Registrar Irregularidade</h2>
       <div style={{ width: '95%' }}>
-
-
         <FormField
           id="infractionDescription"
           label="Descrição da Infração"
@@ -53,9 +51,8 @@ export function InfractionForm({ onSubmit, onCancel, className, initialData }: I
           onChange={(e) => setImmediateInterdiction(e.target.checked)}
         />
       </label>
-
       <div>
-        <Button type="submit" textAction="Salvar Infração" variant="primary" />
+        <Button type="submit" textAction="Salvar Infração" variant="primary" disabled={!description || !severity} />
         <Button type="button" textAction="Cancelar" variant="secondary" onClick={onCancel} />
       </div>
     </form>

@@ -54,7 +54,7 @@ Esta é uma aplicação Next.js desenvolvida para gerenciar inspeções e infra�
 
 ## Principais decisões técnicas
 - **CSS Modules para Estilização**: Permite o encapsulamento de estilos em nível de componente, evitando conflitos de nomes e promovendo um CSS mais modular e fácil de manter.
-- **`json-server` para Mock de API**: Utilizado para simular um backend RESTful de forma rápida e eficiente durante o desenvolvimento, permitindo que o frontend seja desenvolvido de forma independente antes da integração com uma API real.
+- **json-server para Mock de API**: Utilizado para simular um backend RESTful de forma rápida e eficiente durante o desenvolvimento, permitindo que o frontend seja desenvolvido de forma independente antes da integração com uma API real.
 - **Atomic Design para Estrutura de Componentes**: Adoção dos princípios do Atomic Design para organizar os componentes da UI em uma hierarquia clara (átomos, moléculas, organismos). Essa abordagem promove a escalabilidade, a reutilização de componentes e facilita a manutenção do código, garantindo consistência visual e funcional.
 
 
