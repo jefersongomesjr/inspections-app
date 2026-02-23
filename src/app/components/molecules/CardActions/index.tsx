@@ -1,4 +1,5 @@
 import { Button } from '../../atoms/Button';
+import styles from './CardActions.module.css';
 
 type CardActionsProps = {
   onAction: (type: "create" | "concluir" | "irregularidade") => void;
@@ -7,15 +8,16 @@ type CardActionsProps = {
 
 export default function CardActions({ onAction, initialState }: CardActionsProps) {
   return (
-    <div >
-      <Button textAction="Concluir Inspeção" variant="primary" onClick={() => onAction("concluir")} />
+    <> 
       {!initialState && (
-        <Button
-          textAction="Registrar Irregularidade"
-          variant="tertiary"
-          onClick={() => onAction("irregularidade")} />
-      )
-      }
-    </div>
+        <div className={styles.actionsWrapper}>
+          <Button textAction="Concluir Inspeção" variant="primary" onClick={() => onAction("concluir")} />
+          <Button
+            textAction="Registrar Irregularidade"
+            variant="tertiary"
+            onClick={() => onAction("irregularidade")} />
+        </div>
+      )}
+    </>
   );
 }
