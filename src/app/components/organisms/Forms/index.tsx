@@ -9,6 +9,7 @@ type InspectionFormProps = {
   setInspector: (inspector: string) => void;
   onSubmit: (e: React.FormEvent) => void;
   submitLabel?: string;
+  onCancel?: () => void;
 }
 export const InspectionForm = ({
   location,
@@ -17,27 +18,33 @@ export const InspectionForm = ({
   setLocation,
   setInspector,
   onSubmit,
-  submitLabel = "Salvar"
+  submitLabel = "Salvar",
+  onCancel
 }: InspectionFormProps) => (
   <form onSubmit={onSubmit} className={className}>
     <h2>Adicionar Nova Inspeção</h2>
     <div style={{width: '80%'}}>
       <FormField
         id="location"
-        label="Location"
+        label="Localização"
         value={location}
         onChange={(e) => setLocation(e.target.value)}
         placeholder="Digite a localização"
+        required={true}
       />
       <FormField
         id="inspector"
-        label="Inspector"
+        label="Inspetor"
         value={inspector}
         onChange={(e) => setInspector(e.target.value)}
         placeholder="Digite o inspetor"
+        required={true}
       />
     </div>
 
-    <Button type="submit" variant="secondary" textAction={submitLabel} onClick={() => { }} />
+    <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}> 
+      <Button type="submit" variant="primary" textAction={submitLabel} />
+      {onCancel && <Button type="button" variant="secondary" textAction="Cancelar" onClick={onCancel} />}
+    </div>
   </form>
 );
