@@ -174,11 +174,12 @@ a.secondary {
   background-color: rgb(255, 255, 255);
   display: flex;
   width: 30%;
-  height: 40vh;
+  height: 35vh;
   flex-direction: column;
   margin: auto;
+  border-radius: 12px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   justify-self: center;
 }
 

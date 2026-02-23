@@ -27,3 +27,16 @@
     background-color: #2b7c2f;
 }
 
+
+.secondary {
+  background-color: #067eee;
+  color: #fff;
+}
+
+.secondary:hover {
+    background-color: #0644ee;
+}
+
+.secondary:active {
+    background-color: #033e74;
+}
