@@ -40,3 +40,8 @@
 .secondary:active {
     background-color: #033e74;
 }
+
+.tertiary {
+  background-color: #f54141bd;
+  color: #ffffff;
+}
