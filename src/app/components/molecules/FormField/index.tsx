@@ -14,7 +14,7 @@ export const FormField = ({ label, value, onChange, placeholder, id, type = "tex
   return (
     <div className={styles.formField}>
       <label htmlFor={id}>{label}</label>
-      <Input id={id} value={value} onChange={onChange} placeholder={placeholder} type={type} />
+      <Input  value={value} onChange={onChange} placeholder={placeholder} type={type} />
     </div>
   );
 };

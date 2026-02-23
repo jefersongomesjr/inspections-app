@@ -6,7 +6,7 @@ import CardActions from '@/app/components/molecules/CardActions';
 
 type CardProps = {
   inspection: Inspection;
-  onCardAction: (actionType: "create" | "concluir" | "irregularidade") => void;
+  onCardAction: (actionType: "create" | "concluir" | "irregularidade", inspectionId?: string) => void;
 }
 
 export default function Card({ inspection, onCardAction }: CardProps) {
@@ -14,7 +14,7 @@ export default function Card({ inspection, onCardAction }: CardProps) {
     <div className={styles.card}>
       <h2>{inspection.location}</h2>
       <CardContent inspection={inspection} />
-      <CardActions onAction={(actionType) => onCardAction(actionType)} />
+      <CardActions onAction={(actionType) => onCardAction(actionType, inspection.id)} />
     </div>
   );
 }
