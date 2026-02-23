@@ -7,6 +7,7 @@ import { Inspection } from "@/types/inspections";
 import Card from "@/app/components/organisms/Card";
 import { Button } from "@/app/components/atoms/Button";
 import { ModalOverlay } from "../components/atoms/Modal";
+import { InspectionForm } from "../components/organisms/Forms";
 
 export default function Home() {
   const [inspections, setInspections] = useState<Inspection[]>([]);
@@ -42,16 +43,17 @@ export default function Home() {
 
         </div>
         {inspections.map((inspection) => (
-          <Card key={inspection.id} inspection={inspection} setShowModal={() => console.log("Hello")} />
+          <Card key={inspection.id} inspection={inspection} setShowModal={() => console.log("setShowModal")} />
         ))}
         {showModal &&
           <ModalOverlay className={styles.modalOverlay}>
-            <form className={styles.form} onSubmit={handleSubmit}>
-              <h2 style={{ color: "black", marginBottom: "20px" }}> Criar Nova Inspeção</h2>
-              <input type="text" value={location} placeholder="Location" onChange={(e) => setLocation(e.target.value)} />
-              <input type="text" value={inspector} placeholder="Inspector" onChange={(e) => setInspector(e.target.value)} />
-              <Button type="submit" textAction="Criar Inspeção" onClick={() => { }} />
-            </form>
+              <InspectionForm
+                className={styles.form}
+                location={location} 
+                inspector={inspector} 
+                setLocation={setLocation} 
+                setInspector={setInspector} 
+                onSubmit={handleSubmit} />
           </ModalOverlay>}
       </section>
 
