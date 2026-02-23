@@ -7,9 +7,28 @@
 
 }
 
+.mainInfo {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
 .statusLine {
   width: 100%;
   text-align: center;
   margin-top: 10px;
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .cardContent {
+    font-size: 1rem; 
+  }
+
+  .mainInfo {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    gap: 10px; 
+  }
 }
