@@ -1,0 +1,19 @@
+.inspectionContainer {
+  background-color: #067eee;
+  display: flex;
+  padding-top: 20px;
+  flex-direction: column;
+  width: 60%;
+  min-height: 80%;
+  margin: 0 auto;
+  align-items: center;
+  height: 65vh;
+  padding-bottom: 10px;
+  overflow-y: scroll;
+}
+
+@media (max-width: 768px) {
+  .inspectionContainer {
+    width: 96%; 
+}
+}
