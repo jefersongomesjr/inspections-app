@@ -9,6 +9,7 @@ import { Button } from "@/app/components/atoms/Button";
 import { ModalOverlay } from "../components/atoms/Modal";
 import { InspectionForm } from "../components/organisms/Forms";
 import { InfractionForm } from "../components/organisms/InfractionForm";
+import InspectionsLayout from "../components/atoms/InspectionsLayout";
 
 export default function Home() {
   const [inspections, setInspections] = useState<Inspection[]>([]);
@@ -81,7 +82,7 @@ export default function Home() {
 
   return (
     <div className={styles.main}>
-      <section className={styles.inspectionContainer} >
+      <InspectionsLayout>
         <div className={styles.inspectionHeader}>
           <h3>Todas Inspeções</h3>
           <Button textAction="Criar Nova Inspeção" variant="primary" onClick={() => handleOpenModal('create')} />
@@ -100,8 +101,7 @@ export default function Home() {
                 setLocation={setLocation}
                 setInspector={setInspector}
                 onSubmit={handleSubmit}
-                
-                            
+                onCancel={() => setShowModal(false)} 
               />
             )}
 
@@ -160,8 +160,7 @@ export default function Home() {
             )}
           </ModalOverlay>
         )}
-      </section>
-
+      </InspectionsLayout>
     </div>
   );
 }
