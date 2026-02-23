@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createInspection, getInspections } from "@/services/inspections.service";
+import { addInfraction, createInspection, getInspections } from "@/services/inspections.service";
 import styles from "./page.module.css";
 import { Inspection } from "@/types/inspections";
 import Card from "@/app/components/organisms/Card";
 import { Button } from "@/app/components/atoms/Button";
 import { ModalOverlay } from "../components/atoms/Modal";
 import { InspectionForm } from "../components/organisms/Forms";
+import { InfractionForm } from "../components/organisms/InfractionForm";
 
 export default function Home() {
   const [inspections, setInspections] = useState<Inspection[]>([]);
@@ -15,6 +16,7 @@ export default function Home() {
   const [location, setLocation] = useState("");
   const [inspector, setInspector] = useState("");
   const [modalType, setModalType] = useState<"" | "create" | "concluir" | "irregularidade">("");
+  const [selectedInspectionId, setSelectedInspectionId] = useState<string | null>(null);
 
   useEffect(() => {
     getInspections().then(setInspections);
@@ -35,9 +37,29 @@ export default function Home() {
     setShowModal(false);
   };
 
-const handleOpenModal = (type: "create" | "concluir" | "irregularidade") => {
+const handleOpenModal = (type: "create" | "concluir" | "irregularidade", inspectionId?: string) => {
   setModalType(type);
+  if (inspectionId) {
+    setSelectedInspectionId(inspectionId);
+  } else {
+    setSelectedInspectionId(null);
+  }
   setShowModal(true);
+};
+
+const handleSaveInfraction = async (infractionData: { description: string; severity: string; immediateInterdiction: boolean }) => {
+  if (selectedInspectionId) {
+    try {
+      await addInfraction(selectedInspectionId, infractionData);
+      const updatedInspections = await getInspections();
+      setInspections(updatedInspections);
+    } catch (error) {
+      console.error("Error adding infraction:", error);
+    }
+  } else {
+    console.error("No inspection selected to add infraction.");
+  }
+  setShowModal(false);
 };
 
   return (
@@ -49,7 +71,7 @@ const handleOpenModal = (type: "create" | "concluir" | "irregularidade") => {
 
         </div>
         {inspections.map((inspection) => (
-          <Card key={inspection.id} inspection={inspection} onCardAction={handleOpenModal} />
+          <Card key={inspection.id} inspection={inspection} onCardAction={(actionType) => handleOpenModal(actionType, inspection.id)} />
         ))}
         {showModal && (
           <ModalOverlay className={styles.modalOverlay}>
@@ -65,8 +87,17 @@ const handleOpenModal = (type: "create" | "concluir" | "irregularidade") => {
             )}
 
             {modalType === "irregularidade" && (
+              <InfractionForm
+                className={styles.form}
+                onSubmit={handleSaveInfraction}
+                onCancel={() => setShowModal(false)}
+              />
+            )}
+
+            {modalType === "concluir" && (
               <div>
-                <h2>Editar Inspeção</h2>
+                <h2>Concluir Inspeção</h2>
+                <Button textAction="Fechar" variant="secondary" onClick={() => setShowModal(false)} />
               </div>
             )}
           </ModalOverlay>
