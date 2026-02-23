@@ -8,13 +8,16 @@ type FormFieldProps = {
   placeholder?: string;
   id: string;
   type?: string;
+  required?: boolean;
 }
 
-export const FormField = ({ label, value, onChange, placeholder, id, type = "text" }: FormFieldProps) => {
+export const FormField = ({ label, value, onChange, placeholder, id, type = "text", required }: FormFieldProps) => {
   return (
     <div className={styles.formField}>
-      <label htmlFor={id}>{label}</label>
-      <Input  value={value} onChange={onChange} placeholder={placeholder} type={type} />
+      <label htmlFor={id}>
+        {label} {required && <span className={styles.requiredIndicator}>*</span>}
+      </label>
+      <Input  value={value} onChange={onChange} placeholder={placeholder} type={type} required={required} />
     </div>
   );
 };

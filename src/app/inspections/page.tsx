@@ -18,6 +18,7 @@ export default function Home() {
   const [modalType, setModalType] = useState<"" | "create" | "concluir" | "irregularidade">("");
   const [selectedInspectionId, setSelectedInspectionId] = useState<string | null>(null);
   const [finalStatus, setFinalStatus] = useState<string>('');
+  const [showFinalStatusError, setShowFinalStatusError] = useState<boolean>(false);
 
   useEffect(() => {
     getInspections().then(setInspections);
@@ -116,11 +117,15 @@ export default function Home() {
               <div className={styles.form}>
                 <h2>Concluir Inspeção</h2>
                 <div>
-                  <p>Selecione o status final da inspeção:</p>
+                  <p>Selecione o Estado final do Estabelecimento:</p>
                   <select
                     value={finalStatus}
-                    onChange={(e) => setFinalStatus(e.target.value)}
-                    style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc', marginBottom: '10px' }}
+                    onChange={(e) => {
+                      setFinalStatus(e.target.value);
+                      setShowFinalStatusError(false);
+                    }}
+                    style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc', marginBottom: '10px', width: '100%' }}
+                    required 
                   >
                     <option value="">Selecione...</option>
                     <option value="Em conformidade">Em conformidade</option>
@@ -128,15 +133,28 @@ export default function Home() {
                     <option value="Auto de Infração com interdição parcial">Auto de Infração com interdição parcial</option>
                     <option value="Interdição total">Interdição total</option>
                   </select>
+                  {showFinalStatusError && finalStatus === "" && (
+                    <p style={{ color: 'red', fontSize: '0.85em', marginTop: '-5px' }}>Por favor, selecione um status final.</p>
+                  )}
                 </div>
-                <div>
+                <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
                   <Button
                     textAction="Finalizar"
                     variant="primary"
-                    onClick={() => handleFinishInspection(finalStatus)}
+                    onClick={async () => {
+                      if (finalStatus === "") {
+                        setShowFinalStatusError(true);
+                        return;
+                      }
+                      await handleFinishInspection(finalStatus);
+                    }}
                     disabled={!finalStatus}
                   />
-                  <Button textAction="Cancelar" variant="secondary" onClick={() => setShowModal(false)} />
+                  <Button textAction="Cancelar" variant="secondary" onClick={() => {
+                    setShowModal(false);
+                    setFinalStatus(''); 
+                    setShowFinalStatusError(false);
+                  }} />
                 </div>
               </div>
             )}

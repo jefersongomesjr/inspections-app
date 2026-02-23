@@ -31,6 +31,7 @@ export function InfractionForm({ onSubmit, onCancel, className, initialData }: I
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Descreva a natureza da infração..."
+          required={true}
         />
 
         <FormField
@@ -39,6 +40,7 @@ export function InfractionForm({ onSubmit, onCancel, className, initialData }: I
           value={severity}
           onChange={(e) => setSeverity(e.target.value)}
           placeholder="Ex: Baixa, Média, Alta"
+          required={true}
         />
       </div>
 

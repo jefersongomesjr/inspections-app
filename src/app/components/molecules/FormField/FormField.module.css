@@ -15,3 +15,8 @@
     padding: 20px;
     border-radius: 6px;
 }
+
+.requiredIndicator {
+    color: red;
+    margin-left: 4px;
+}

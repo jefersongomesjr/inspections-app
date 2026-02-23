@@ -4,15 +4,18 @@ type Button = {
   textAction: string;
   type?: "button" | "submit" | "reset";
   variant?: "primary" | "secondary" | "tertiary";
-  onClick?: () => void
+  onClick?: () => void;
+  disabled?: boolean;
 };
 
-export function Button({ textAction, variant, onClick, type}: Button) {
+export function Button({ textAction, variant, onClick, type, disabled }: Button) {
   return (
     <button
         type={type}
         className={`${styles.btn} ${variant && styles[variant]}`}
-        onClick={onClick}>{textAction}
+        onClick={onClick}
+        disabled={disabled} 
+    >{textAction}
     </button>
   )
 }
