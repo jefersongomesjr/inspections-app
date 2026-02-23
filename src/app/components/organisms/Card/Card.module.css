@@ -1,10 +1,12 @@
 .card {
+    padding: 10px;
+    margin-bottom: 20px;
     align-items: center;
     background-color: #e0dede;
     border: 1px solid #868181;
     display: flex;
+    min-height: 20%;
+    justify-content: space-around;
     flex-direction: column;
     width: 70%;
 }
-
-

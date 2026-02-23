@@ -1,0 +1,29 @@
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 128px;
+  border: 1px solid transparent;
+  transition: 0.2s;
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 18px;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.primary {
+  background-color: #4cee54;
+  color: #fff;
+}
+
+.primary:hover {
+    background-color: #3eae43;
+}
+
+.primary:active {
+    background-color: #2b7c2f;
+}
+
