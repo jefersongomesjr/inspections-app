@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Inspeções App
 
-## Getting Started
+## Visão Geral
+Esta é uma aplicação Next.js desenvolvida para gerenciar inspeções e infrações. Ela oferece uma interface de usuário para visualizar inspeções e permite a criação e o gerenciamento de infrações associadas a essas inspeções.
 
-First, run the development server:
+## Funcionalidades
+- Visualizar uma lista de inspeções.
+- Criar novas infrações para inspeções específicas.
+- Visualização detalhada de inspeções individuais.
+- Simulação de API usando `json-server`.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tecnologias Utilizadas
+- **Next.js**
+- **React**
+- **TypeScript**
+- **CSS Modules**
+- **json-server**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Primeiros Passos
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Pré-requisitos
+- Node.js (versão 18 ou superior recomendada)
+- npm ou yarn
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Instalação
 
-## Learn More
+1.  Clone o repositório:
+    ```bash
+    git clone https://github.com/jefersongomesjr/inspections-app.git
+    cd inspections-app
+    ```
+2.  Instale as dependências:
+    ```bash
+    npm install
+    # ou
+    yarn install
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+### Executando o Servidor de Desenvolvimento
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  Inicie o servidor da API (usando `json-server`):
+    ```bash
+    npm run db:start
+    # Para iniciar o banco de dados com o Json-server em http://localhost:3001
+    ```
+    Certifique-se de que `db.json` exista na raiz do projeto para que a API sirva os dados.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2.  Em um terminal separado, inicie o servidor de desenvolvimento Next.js:
+    ```bash
+    npm run dev
+    ```
+    Abra [http://localhost:3000] no seu navegador para ver a aplicação.
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Principais decisões técnicas
+- **CSS Modules para Estilização**: Permite o encapsulamento de estilos em nível de componente, evitando conflitos de nomes e promovendo um CSS mais modular e fácil de manter.
+- **`json-server` para Mock de API**: Utilizado para simular um backend RESTful de forma rápida e eficiente durante o desenvolvimento, permitindo que o frontend seja desenvolvido de forma independente antes da integração com uma API real.
+- **Atomic Design para Estrutura de Componentes**: Adoção dos princípios do Atomic Design para organizar os componentes da UI em uma hierarquia clara (átomos, moléculas, organismos). Essa abordagem promove a escalabilidade, a reutilização de componentes e facilita a manutenção do código, garantindo consistência visual e funcional.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
