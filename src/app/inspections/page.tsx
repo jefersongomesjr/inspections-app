@@ -14,6 +14,7 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [location, setLocation] = useState("");
   const [inspector, setInspector] = useState("");
+  const [modalType, setModalType] = useState<"" | "create" | "concluir" | "irregularidade">("");
 
   useEffect(() => {
     getInspections().then(setInspections);
@@ -34,27 +35,42 @@ export default function Home() {
     setShowModal(false);
   };
 
+const handleOpenModal = (type: "create" | "concluir" | "irregularidade") => {
+  setModalType(type);
+  setShowModal(true);
+};
+
   return (
     <div className={styles.main}>
       <section className={styles.inspectionContainer} >
         <div className={styles.inspectionHeader}>
           <h3>Todas Inspeções</h3>
-          <Button textAction="Criar Nova Inspeção" variant="primary" onClick={() => setShowModal(true)} />
+          <Button textAction="Criar Nova Inspeção" variant="primary" onClick={() => handleOpenModal('create')} />
 
         </div>
         {inspections.map((inspection) => (
-          <Card key={inspection.id} inspection={inspection} setShowModal={() => console.log("setShowModal")} />
+          <Card key={inspection.id} inspection={inspection} onCardAction={handleOpenModal} />
         ))}
-        {showModal &&
+        {showModal && (
           <ModalOverlay className={styles.modalOverlay}>
+            {modalType === "create" && (
               <InspectionForm
+                location={location}
                 className={styles.form}
-                location={location} 
-                inspector={inspector} 
-                setLocation={setLocation} 
-                setInspector={setInspector} 
-                onSubmit={handleSubmit} />
-          </ModalOverlay>}
+                inspector={inspector}
+                setLocation={setLocation}
+                setInspector={setInspector}
+                onSubmit={handleSubmit}
+              />
+            )}
+
+            {modalType === "irregularidade" && (
+              <div>
+                <h2>Editar Inspeção</h2>
+              </div>
+            )}
+          </ModalOverlay>
+        )}
       </section>
 
     </div>

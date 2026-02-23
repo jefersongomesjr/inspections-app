@@ -6,15 +6,15 @@ import CardActions from '@/app/components/molecules/CardActions';
 
 type CardProps = {
   inspection: Inspection;
-  setShowModal: (showModal: boolean) => void;
+  onCardAction: (actionType: "create" | "concluir" | "irregularidade") => void;
 }
 
-export default function Card({ inspection, setShowModal }: CardProps) {
+export default function Card({ inspection, onCardAction }: CardProps) {
   return (
     <div className={styles.card}>
       <h2>{inspection.location}</h2>
       <CardContent inspection={inspection} />
-      <CardActions onClick={() => setShowModal(true)} />
+      <CardActions onAction={(actionType) => onCardAction(actionType)} />
     </div>
   );
 }

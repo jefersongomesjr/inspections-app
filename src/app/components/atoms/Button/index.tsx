@@ -3,7 +3,7 @@ import styles from './Button.module.css'; // Add this import
 type Button = {
   textAction: string;
   type?: "button" | "submit" | "reset";
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
   onClick: () => void
 };
 
