@@ -14,7 +14,10 @@ export default function Card({ inspection, onCardAction }: CardProps) {
     <div className={styles.card}>
       <h2>{inspection.location}</h2>
       <CardContent inspection={inspection} />
-      <CardActions onAction={(actionType) => onCardAction(actionType, inspection.id)} />
+      <CardActions
+        initialState={inspection.initial_state}
+        onAction={(actionType) => onCardAction(actionType, inspection.id)} 
+      />
     </div>
   );
 }

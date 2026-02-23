@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { addInfraction, createInspection, getInspections } from "@/services/inspections.service";
+import { addInfraction, createInspection, getInspections, finalizeInspection } from "@/services/inspections.service";
 import styles from "./page.module.css";
 import { Inspection } from "@/types/inspections";
 import Card from "@/app/components/organisms/Card";
@@ -17,6 +17,7 @@ export default function Home() {
   const [inspector, setInspector] = useState("");
   const [modalType, setModalType] = useState<"" | "create" | "concluir" | "irregularidade">("");
   const [selectedInspectionId, setSelectedInspectionId] = useState<string | null>(null);
+  const [finalStatus, setFinalStatus] = useState<string>('');
 
   useEffect(() => {
     getInspections().then(setInspections);
@@ -37,30 +38,45 @@ export default function Home() {
     setShowModal(false);
   };
 
-const handleOpenModal = (type: "create" | "concluir" | "irregularidade", inspectionId?: string) => {
-  setModalType(type);
-  if (inspectionId) {
-    setSelectedInspectionId(inspectionId);
-  } else {
-    setSelectedInspectionId(null);
-  }
-  setShowModal(true);
-};
-
-const handleSaveInfraction = async (infractionData: { description: string; severity: string; immediateInterdiction: boolean }) => {
-  if (selectedInspectionId) {
-    try {
-      await addInfraction(selectedInspectionId, infractionData);
-      const updatedInspections = await getInspections();
-      setInspections(updatedInspections);
-    } catch (error) {
-      console.error("Error adding infraction:", error);
+  const handleOpenModal = (type: "create" | "concluir" | "irregularidade", inspectionId?: string) => {
+    setModalType(type);
+    if (inspectionId) {
+      setSelectedInspectionId(inspectionId);
+    } else {
+      setSelectedInspectionId(null);
     }
-  } else {
-    console.error("No inspection selected to add infraction.");
-  }
-  setShowModal(false);
-};
+    setShowModal(true);
+  };
+
+  const handleSaveInfraction = async (infractionData: { description: string; severity: string; immediateInterdiction: boolean }) => {
+    if (selectedInspectionId) {
+      try {
+        await addInfraction(selectedInspectionId, infractionData);
+        const updatedInspections = await getInspections();
+        setInspections(updatedInspections);
+      } catch (error) {
+        console.error("Error adding infraction:", error);
+      }
+    } else {
+      console.error("No inspection selected to add infraction.");
+    }
+    setShowModal(false);
+  };
+
+  const handleFinishInspection = async (newStatus: string) => {
+    if (selectedInspectionId && newStatus) {
+      try {
+        await finalizeInspection(selectedInspectionId, newStatus);
+        const updatedInspections = await getInspections();
+        setInspections(updatedInspections);
+      } catch (error) {
+        console.error("Error finalizing inspection:", error);
+      }
+    } else {
+      console.error("No inspection selected or no final status provided.");
+    }
+    setShowModal(false);
+  };
 
   return (
     <div className={styles.main}>
@@ -83,6 +99,8 @@ const handleSaveInfraction = async (infractionData: { description: string; sever
                 setLocation={setLocation}
                 setInspector={setInspector}
                 onSubmit={handleSubmit}
+                
+                            
               />
             )}
 
@@ -95,9 +113,31 @@ const handleSaveInfraction = async (infractionData: { description: string; sever
             )}
 
             {modalType === "concluir" && (
-              <div>
+              <div className={styles.form}>
                 <h2>Concluir Inspeção</h2>
-                <Button textAction="Fechar" variant="secondary" onClick={() => setShowModal(false)} />
+                <div>
+                  <p>Selecione o status final da inspeção:</p>
+                  <select
+                    value={finalStatus}
+                    onChange={(e) => setFinalStatus(e.target.value)}
+                    style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc', marginBottom: '10px' }}
+                  >
+                    <option value="">Selecione...</option>
+                    <option value="Em conformidade">Em conformidade</option>
+                    <option value="Pendências">Pendências</option>
+                    <option value="Auto de Infração com interdição parcial">Auto de Infração com interdição parcial</option>
+                    <option value="Interdição total">Interdição total</option>
+                  </select>
+                </div>
+                <div>
+                  <Button
+                    textAction="Finalizar"
+                    variant="primary"
+                    onClick={() => handleFinishInspection(finalStatus)}
+                    disabled={!finalStatus}
+                  />
+                  <Button textAction="Cancelar" variant="secondary" onClick={() => setShowModal(false)} />
+                </div>
               </div>
             )}
           </ModalOverlay>

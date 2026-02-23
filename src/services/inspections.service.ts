@@ -27,7 +27,6 @@ export async function addInfraction(inspectionId: string, infractionData: { desc
     throw new Error(`Erro ao buscar inspeção com ID ${inspectionId}`);
   }
   const inspection: Inspection = await getRes.json();
-
   const currentInfractions = inspection.infractions || [];
 
   const newInfraction: Infraction = {
@@ -53,5 +52,34 @@ export async function addInfraction(inspectionId: string, infractionData: { desc
     throw new Error(`Erro ao adicionar infração à inspeção ${inspectionId}`);
   }
   
+  return updatedInspection;
+}
+
+export async function finalizeInspection(inspectionId: string, newStatus: string) {
+  const getRes = await fetch(`${API_URL}/${inspectionId}`);
+  if (!getRes.ok) {
+    throw new Error(`Erro ao buscar inspeção com ID ${inspectionId}`);
+  }
+
+  const inspection = await getRes.json();
+
+  const updatedInspection = {
+    ...inspection,
+    initial_state: true,
+    status: newStatus
+  };
+
+  const patchRes = await fetch(`${API_URL}/${inspectionId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(updatedInspection)
+  });
+
+  if (!patchRes.ok) {
+    throw new Error(`Erro ao finalizar inspeção ${inspectionId}`);
+  }
+
   return updatedInspection;
 }
